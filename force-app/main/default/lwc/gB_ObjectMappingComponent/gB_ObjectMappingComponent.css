@@ -1,0 +1,67 @@
+@import "c/gB_GlobalCSS";
+
+/* body {
+    background-color: var(--slds-g-color-surface-1);
+    margin: 0;
+}
+
+.table-container {
+    margin: auto;
+    padding: var(--slds-g-spacing-4);
+    border-radius: var(--slds-g-radius-border-4);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: var(--slds-g-radius-border-4);
+    overflow: visible;
+}
+
+th, td {
+    padding: var(--slds-g-spacing-2);
+    text-align: left;
+    border-bottom: var(--slds-g-sizing-border-1) solid var(--slds-g-color-border-1);
+}
+
+th {
+    background-color: var(--slds-g-color-info-1);
+    font-weight: var(--slds-g-font-weight-7);
+    color: var(--slds-g-color-on-accent-1);
+}
+
+td {
+    background-color: var(--slds-g-color-surface-container-1);
+}
+
+tr:nth-child(even) td {
+    background-color: var(--slds-g-color-surface-container-2);
+}
+
+tr:first-child th {
+    border-top: none;
+}
+
+td, th {
+    border-left: var(--slds-g-sizing-border-1) solid var(--slds-g-color-border-1);
+}
+
+td:last-child, th:last-child {
+    border-right: var(--slds-g-sizing-border-1) solid var(--slds-g-color-border-1);
+}
+
+.buttonContainer {
+    display: flex;
+    flex-direction: row-reverse;
+    padding-left: var(--slds-g-spacing-4);
+    padding-right: var(--slds-g-spacing-4);
+    padding-bottom: var(--slds-g-spacing-4);
+}
+
+.changed {
+    background-color: var(--slds-g-color-warning-base-90) !important;
+}
+
+.errored {
+    background-color: var(--slds-g-color-error-base-70) !important;
+} */

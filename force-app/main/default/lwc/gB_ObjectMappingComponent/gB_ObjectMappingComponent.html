@@ -1,0 +1,94 @@
+<template>
+    <lightning-card title="Data Object Mapping">
+        <lightning-button 
+            name="SaveButton"
+            label="Save Mappings"
+            title="Save Mapping Changes"
+            onclick={handleSave}
+            variant="brand"
+            slot="actions">
+        </lightning-button>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:10%">Active</th>
+                        <th style="width:20%">GiveButter Data Source</th>
+                        <th style="width:70%">Corresponding Salesforce Object</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template lwc:if={mapData}>
+                        <template for:each={mapData} for:item="map">
+                            <tr key={map.Id}>
+                                <td>
+                                    <lightning-input 
+                                        type="checkbox" 
+                                        label="" 
+                                        name={map.Id}
+                                        checked={map.Active__c}
+                                        onchange={handleActiveChange}>
+                                    </lightning-input>
+                                </td>
+                                <td>
+                                    <lightning-formatted-text 
+                                        value={map.Name}>
+                                    </lightning-formatted-text>
+                                </td>
+                                <td>
+                                    <template lwc:if={map.Active__c}>
+                                        <lightning-combobox
+                                            name={map.Id}
+                                            label="Salesforce Object"
+                                            variant="label-hidden"
+                                            value={map.SF_Object__c}
+                                            placeholder="Select a Salesforce Object"
+                                            options={objectList}
+                                            onchange={handleSFObjectChanged}
+                                            disabled={f}>
+                                        </lightning-combobox>
+                                    </template>
+                                    <template lwc:else>
+                                        <lightning-combobox
+                                            name={map.Id}
+                                            label="Salesforce Object"
+                                            variant="label-hidden"
+                                            value={map.SF_Object__c}
+                                            placeholder="Select a Salesforce Object"
+                                            options={objectList}
+                                            onchange={handleSFObjectChanged}
+                                            disabled={t}>
+                                        </lightning-combobox>
+                                    </template>
+                                </td>
+                            </tr>
+                        </template>
+                    </template>
+                    <template lwc:else>
+                        <!-- <div>
+                            <div>
+                                No mappings found
+                                TODO: Add a button to recreate base mapping objects
+                            </div>
+                        </div> -->
+                        <lightning-spinner variant="brand" size="large"> </lightning-spinner>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+        <template lwc:if={isSaving}>
+            <lightning-spinner variant="brand" size="large"> </lightning-spinner>
+        </template>
+        <template lwc:else>
+            <div class="buttonContainer">
+                <lightning-button 
+                    name="SaveButton"
+                    label="Save Mappings"
+                    title="Save Mapping Changes"
+                    onclick={handleSave}
+                    variant="brand">
+                </lightning-button>
+            </div>
+        </template>
+    </lightning-card>
+</template>

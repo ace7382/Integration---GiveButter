@@ -1,60 +1,74 @@
 import { LightningElement } from 'lwc';
+import { api } from 'lwc';
 import { wire } from 'lwc';
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { refreshApex } from '@salesforce/apex';
 
-import getObjectList from '@salesforce/apex/ObjectMappingController.getObjectLabelsList';
-import getObjectMaps from '@salesforce/apex/ObjectMappingController.getObjectMappingList';
-import updateMappings from '@salesforce/apex/ObjectMappingController.updateObjectMappings';
+import getFieldListForObject from '@salesforce/apex/ObjectMappingController.getFieldsByObject';
+import getFieldMappings from '@salesforce/apex/ObjectMappingController.getFieldMappingsByObjectId';
+import updateFieldMappings from '@salesforce/apex/ObjectMappingController.updateFieldMappings';
 
+// import { setChanged } from 'c/utils';
 import { toggleChanged } from 'c/utils';
 import { activeBoxChanged } from 'c/utils';
 import { sfComboboxChanged } from 'c/utils';
 import { getUniqueIDs } from 'c/utils';
 
-export default class GB_ObjectMappingComponent extends LightningElement 
+export default class GB_FieldMappingTable extends LightningElement 
 {
+    @api objectMappingInfo;
+    @api currentValue; // current SF_Field dropdown value
+
+    fieldMappings;
+    fieldsForObject = [];
+
     error;
-    mapData;
-    objectList = [];
     t = true;
     f = false;
+
     isSaving = false;
+    fieldsInitialized = false;
 
     //need for refresh apex
-    wiredObjectMapsResult;
+    wiredFieldMappingsResult;
 
-    @wire(getObjectList)
-    objects({error, data})
+    @wire(getFieldMappings, { objectId: '$objectMappingInfo.Id' })
+    mappings(result)
     {
-        if (data)
-        {
-            console.log(data);
-            
-            this.objectList = data.map(obj => ({ label: obj, value: obj }));
-            this.objectList.unshift({ label: " ", value: "" });
-        }
-        else if (error)
-        {
-            this.error = error;
-            this.objectList = undefined;
-        }
-    }
+        console.log(this.objectMapId);
 
-    @wire(getObjectMaps)
-    maps(result)
-    {
-        this.wiredObjectMapsResult = result;
+        this.wiredFieldMappingsResult = result;
+
         if (result.data)
         {
-            console.log('found ' + result.data.length + ' records');
-            console.log(result.data);
-            this.mapData = result.data;
+            this.fieldMappings = result.data;
         }
         else if (result.error)
         {
             this.error = result.error;
-            this.maps = undefined;
+            this.fieldMappings = undefined;
+        }
+    }
+
+    @wire(getFieldListForObject, { objectDeveloperName: '$objectMappingInfo.SF_Object__c'})
+    fieldOptions({ error, data })
+    {
+        console.log("-------");
+        console.log(data);
+
+        if (data)
+        {            
+            Object.keys(data).forEach((key) => this.fieldsForObject.push({ value: key, label: data[key] }));
+            this.fieldsForObject.sort((a, b) => a.label.localeCompare(b.label));
+
+            this.fieldsForObject.unshift({ value: '', label: ' ' });
+
+            this.fieldsInitialized = true;
+        }
+        else if (error)
+        {
+            this.error = error;
+            this.fieldsForObject = undefined;
         }
     }
 
@@ -65,9 +79,10 @@ export default class GB_ObjectMappingComponent extends LightningElement
 
     handleSFObjectChanged(event)
     {
-        sfComboboxChanged(event, this.mapData);
+        sfComboboxChanged(event, this.fieldMappings);
     }
 
+    @api
     async handleSave()
     {
         if (this.isSaving) return;
@@ -79,7 +94,7 @@ export default class GB_ObjectMappingComponent extends LightningElement
         const comboBoxes = Array.from(this.template.querySelectorAll('lightning-combobox'));
 
         checkboxes.forEach((element) => {
-            newMapSettings.push( { Id: element.name, Active__c: element.checked, SF_Object__c: "" } );
+            newMapSettings.push( { Id: element.name, Active__c: element.checked, SF_Field__c: "" } );
         });
 
         console.log("New Settings pre-combo: ");
@@ -87,19 +102,18 @@ export default class GB_ObjectMappingComponent extends LightningElement
 
         comboBoxes.forEach((element) => {
             element.parentNode.classList.remove('errored');
-            newMapSettings.find((x) => x.Id === element.name).SF_Object__c = element.value;
+            newMapSettings.find((x) => x.Id === element.name).SF_Field__c = element.value;
         });
 
         console.log(newMapSettings);
 
-        //const dupeSFObjs = this.findNonUniqueSFObjects(comboBoxes);
         const dupeSFObjs = getUniqueIDs(comboBoxes);
 
         if (dupeSFObjs.length > 0)
         {
             const evt = new ShowToastEvent({
-                title: 'Mappings NOT Saved',
-                message: 'Each Object must be mapped to a unique Salesforce Object',
+                title: '$this.objectMappingInfo.Name + : Mappings NOT Saved',
+                message: 'Each Field must be mapped to a unique Salesforce Field',
                 variant: 'error',
                 mode: 'dissmissable'
             });
@@ -111,18 +125,17 @@ export default class GB_ObjectMappingComponent extends LightningElement
         else
         {
             try {
-                await updateMappings({ updatedMappings: newMapSettings });
+                await updateFieldMappings({ updatedMappings: newMapSettings });
 
                 const evt = new ShowToastEvent({
-                    title: 'Object Mappings saved Successfully',
-                    message: 'Field Mappings may need to be adjusted now',
+                    title: '$this.objectMappingInfo.Name + : Field Mappings saved Successfully',
                     variant: 'success',
                     mode: 'dismissable'
                 });
 
                 this.dispatchEvent(evt);
 
-                await refreshApex(this.wiredObjectMapsResult).then(() => {
+                await refreshApex(this.wiredFieldMappingsResult).then(() => {
                     const changedCells = Array.from(this.template.querySelectorAll('.changed'));
 
                     changedCells.forEach((element) => {

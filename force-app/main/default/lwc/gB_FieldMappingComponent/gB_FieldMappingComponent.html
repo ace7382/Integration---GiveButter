@@ -1,12 +1,27 @@
 <template>
     <lightning-card title="Data Object Mapping">
         <lightning-button 
-            name="SaveButton"
-            label="Save Mappings"
-            title="Save Mapping Changes"
-            onclick={handleSave}
+            name="SaveAllButton"
+            label="Save All"
+            title="Save All Changes"
+            onclick={handleSaveAll}
             variant="brand"
             slot="actions">
         </lightning-button>
+        <lightning-accordion>
+            <template lwc:if={initialized}>
+                <template for:each={mapData} for:item="map">
+                    <lightning-accordion-section
+                        key={map.Id}
+                        name={map.Id}
+                        label={map.Name}>
+                        <c-g-b_-field-mapping-table object-mapping-info={map}></c-g-b_-field-mapping-table>
+                    </lightning-accordion-section>
+                </template>
+            </template>
+            <template lwc:else>
+                <div>TODO ADD LOADER</div>
+            </template>
+        </lightning-accordion>
     </lightning-card>
 </template>

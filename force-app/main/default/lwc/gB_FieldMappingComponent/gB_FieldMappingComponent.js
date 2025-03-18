@@ -39,7 +39,10 @@ export default class GB_FieldMappingComponent extends LightningElement
 
         const objectsToSave = this.template.querySelectorAll('c-g-b_-field-mapping-table');
 
-        try{
+        try
+        {
+            //TODO: disable toasts and collect info for a general toast
+            //      For unsaved sets, add emoji/icon to accordian segment title
             objectsToSave.forEach(async obj => { await obj.handleSave(); });
         }
         catch (e)

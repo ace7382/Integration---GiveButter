@@ -1,0 +1,69 @@
+<template>
+    <lightning-card icon-name="standard:custom">
+        <div slot="title">
+            Setup
+        </div>
+        <div class="table-container col-container">
+            <div class="column">
+                <lightning-input
+                    type="text" 
+                    label="GiveButter API Key"
+                    name="apiKeyText">
+                </lightning-input>
+                <lightning-button 
+                    name="GenerateButton"
+                    label="Generate Credentials"
+                    variant="brand">
+                </lightning-button>
+            </div>
+            <div class="column">
+                <div class="container warning-container">
+                    <lightning-icon icon-name="utility:light_bulb"></lightning-icon>
+                    To generate an API Key, log into your GiveButter Account and go to Settings > Integrations > API.
+                </div>
+            </div>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:10%">Configured</th>
+                        <th style="width:20%">Object</th>
+                        <th style="width:70%">Link to Record</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <!-- TODO: Set "While Generating", change to x if fail, check if success -->
+                        <td class="center-element">
+                            <template lwc:if={externalCredential}>
+                                <lightning-icon icon-name="standard:task2"></lightning-icon>
+                            </template>
+                            <template lwc:else>
+                                <lightning-icon icon-name="standard:first_non_empty"></lightning-icon>
+                            </template>
+                        </td>
+                        <td>
+                            <lightning-formatted-text value="Named Credential"></lightning-formatted-text>
+                        </td>
+                        <td>
+                            <template lwc:if={externalCredential}>
+                                <lightning-formatted-url 
+                                    value={externalCredentialURL}
+                                    label={externalCredential.id}
+                                    target="_blank">
+                                </lightning-formatted-url>
+                            </template>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <lightning-progress-indicator>
+                <lightning-progress-step label="Credentials" value="1"></lightning-progress-step>
+                <lightning-progress-step label="Finished" value="1"></lightning-progress-step>
+            </lightning-progress-indicator>
+        </div>
+    </lightning-card>
+</template>

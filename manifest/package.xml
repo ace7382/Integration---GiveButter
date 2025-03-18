@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
+        <members>ObjectMappingController</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
         <members>apexEmailNotifications</members>
         <name>ApexEmailNotifications</name>
     </types>
@@ -33,6 +37,7 @@
         <name>Community</name>
     </types>
     <types>
+        <members>Tesr</members>
         <members>standard__AllTabSet</members>
         <members>standard__AppLauncher</members>
         <members>standard__Approvals</members>
@@ -71,6 +76,11 @@
         <members>Case.SLAViolation__c</members>
         <members>Contact.Languages__c</members>
         <members>Contact.Level__c</members>
+        <members>GiveButter_Field_Mapping__c.Active__c</members>
+        <members>GiveButter_Field_Mapping__c.GiveButter_Object__c</members>
+        <members>GiveButter_Field_Mapping__c.SF_Field__c</members>
+        <members>GiveButter_Object_Mapping__c.Active__c</members>
+        <members>GiveButter_Object_Mapping__c.SF_Object__c</members>
         <members>Goal.OrigGoalId__c</members>
         <members>Lead.CurrentGenerators__c</members>
         <members>Lead.NumberofLocations__c</members>
@@ -176,6 +186,8 @@
         <members>FlowOrchestrationStageInstance</members>
         <members>FlowOrchestrationStepInstance</members>
         <members>FlowOrchestrationWorkItem</members>
+        <members>GiveButter_Field_Mapping__c</members>
+        <members>GiveButter_Object_Mapping__c</members>
         <members>Idea</members>
         <members>Image</members>
         <members>Incident</members>
@@ -270,6 +282,17 @@
         <name>CustomObject</name>
     </types>
     <types>
+        <members>GiveButter_Field_Mapping__c-en_US</members>
+        <members>GiveButter_Object_Mapping__c-en_US</members>
+        <name>CustomObjectTranslation</name>
+    </types>
+    <types>
+        <members>GiveButter_Field_Mapping__c</members>
+        <members>GiveButter_Object_Mapping__c</members>
+        <members>Test_app_page</members>
+        <name>CustomTab</name>
+    </types>
+    <types>
         <members>Contact.Standard_Rule_for_Contacts_with_Duplicate_Leads</members>
         <members>Lead.Standard_Rule_for_Leads_with_Duplicate_Contacts</members>
         <name>DuplicateRule</name>
@@ -307,12 +330,23 @@
         <name>EscalationRules</name>
     </types>
     <types>
+        <members>GiveButter_Credential</members>
+        <name>ExternalCredential</name>
+    </types>
+    <types>
+        <members>GiveButter</members>
+        <name>ExternalServiceRegistration</name>
+    </types>
+    <types>
         <members>DataGovernanceConsole_UtilityBar</members>
         <members>FlowsApp_UtilityBar</members>
+        <members>GiveButter_Object_Mapping_Record_Page1</members>
         <members>LightningSalesConsole_UtilityBar</members>
         <members>LightningSales_UtilityBar</members>
         <members>LightningService_UtilityBar</members>
         <members>SalesCloudMobile_UtilityBar</members>
+        <members>Tesr_UtilityBar</members>
+        <members>Test_app_page</members>
         <name>FlexiPage</name>
     </types>
     <types>
@@ -395,6 +429,9 @@
         <members>FeedItem-Feed Item Layout</members>
         <members>FinanceBalanceSnapshot-Finance Balance Snapshot Layout</members>
         <members>FinanceTransaction-Finance Transaction Layout</members>
+        <members>FlowInterview-Flow Interview Layout</members>
+        <members>GiveButter_Field_Mapping__c-GiveButter Field Mapping Layout</members>
+        <members>GiveButter_Object_Mapping__c-GiveButter Object Mapping Layout</members>
         <members>Global-Global Layout</members>
         <members>GuestUserAnomalyEventStore-Guest User Anomaly Event Store Layout</members>
         <members>Idea-Idea Layout</members>
@@ -458,6 +495,14 @@
         <members>WorkStepTemplate-Work Step Template Layout</members>
         <members>WorkThanks-Thanks Layout</members>
         <name>Layout</name>
+    </types>
+    <types>
+        <members>gB_FieldMappingComponent</members>
+        <members>gB_FieldMappingTable</members>
+        <members>gB_GlobalCSS</members>
+        <members>gB_ObjectMappingComponent</members>
+        <members>utils</members>
+        <name>LightningComponentBundle</name>
     </types>
     <types>
         <members>Account.AllAccounts</members>
@@ -539,6 +584,8 @@
         <members>FlowOrchestrationInstance.All_Orchestration_Instances</members>
         <members>FlowOrchestrationWorkItem.ALL_Open_Work_Items</members>
         <members>FlowOrchestrationWorkItem.All_Work_Items</members>
+        <members>GiveButter_Field_Mapping__c.All</members>
+        <members>GiveButter_Object_Mapping__c.All</members>
         <members>Idea.Ideas_Last_7_Days</members>
         <members>Incident.AllIncidentsDefault</members>
         <members>Incident.MyIncidents</members>
@@ -623,10 +670,15 @@
         <name>MilestoneType</name>
     </types>
     <types>
+        <members>GiveButter_API</members>
+        <name>NamedCredential</name>
+    </types>
+    <types>
         <members>NotificationTypeConfig</members>
         <name>NotificationTypeConfig</name>
     </types>
     <types>
+        <members>NamedCred</members>
         <members>sfdcInternalInt__sfdc_scrt2</members>
         <name>PermissionSet</name>
     </types>
@@ -717,15 +769,16 @@
     </types>
     <types>
         <members>ApexDevNet</members>
+        <members>GB</members>
         <name>RemoteSiteSetting</name>
     </types>
     <types>
-        <members>EBotR_v3</members>
-        <members>EBotR_v4</members>
-        <members>EBotR_v5</members>
-        <members>EinsteinBotReports</members>
-        <members>EinsteinBotReports_v2</members>
-        <members>unfiled$public</members>
+        <members>EBotR_v3/</members>
+        <members>EBotR_v4/</members>
+        <members>EBotR_v5/</members>
+        <members>EinsteinBotReports/</members>
+        <members>EinsteinBotReports_v2/</members>
+        <members>unfiled$public/</members>
         <members>unfiled$public/flow_orchestration_log_ootb_report_two_four_eight</members>
         <members>unfiled$public/flow_orchestration_run_ootb_report_two_four_eight</members>
         <members>unfiled$public/flow_orchestration_stage_run_ootb_report_two_four_eight</members>
@@ -951,6 +1004,7 @@
         <members>FlowOrchestrationWorkItem</members>
         <members>FlowRecord</members>
         <members>FlowTestResult</members>
+        <members>GiveButter_Object_Mapping__c</members>
         <members>Image</members>
         <members>Incident</members>
         <members>Individual</members>
@@ -1070,6 +1124,8 @@
         <members>ContentDocument</members>
         <members>Contract</members>
         <members>Event</members>
+        <members>GiveButter_Field_Mapping__c</members>
+        <members>GiveButter_Object_Mapping__c</members>
         <members>Incident</members>
         <members>Lead</members>
         <members>Opportunity</members>
@@ -1096,6 +1152,11 @@
         <members>pt_BR</members>
         <members>zh_CN</members>
         <name>Translations</name>
+    </types>
+    <types>
+        <members>GiveButter_Object_Mapping_Record_Page1</members>
+        <members>Test_app_page</members>
+        <name>UiViewDefinition</name>
     </types>
     <types>
         <members>User.NoUsernameChangesAllowed</members>

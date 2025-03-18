@@ -64,3 +64,28 @@ td:last-child, th:last-child {
 .errored {
     background-color: var(--slds-g-color-error-base-70) !important;
 }
+
+.col-container {
+    display: flex;
+}
+
+.column {
+    flex: 1;
+    box-sizing: border-box;
+    max-width: 50%;
+    padding: var(--slds-g-spacing-2);
+}
+
+.warning-container {
+    background-color: var(--slds-g-color-warning-base-90);
+}
+
+.container {
+    border-radius: var(--slds-g-radius-border-4);
+    padding: var(--slds-g-spacing-4);
+    margin: var(--slds-g-spacing-4);
+}
+
+.center-element {
+    text-align: center;
+}

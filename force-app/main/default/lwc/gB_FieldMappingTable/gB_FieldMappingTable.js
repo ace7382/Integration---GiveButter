@@ -112,7 +112,7 @@ export default class GB_FieldMappingTable extends LightningElement
         if (dupeSFObjs.length > 0)
         {
             const evt = new ShowToastEvent({
-                title: '$this.objectMappingInfo.Name + : Mappings NOT Saved',
+                title: `${this.objectMappingInfo.Name} - Mappings NOT Saved`,
                 message: 'Each Field must be mapped to a unique Salesforce Field',
                 variant: 'error',
                 mode: 'dissmissable'
@@ -128,7 +128,7 @@ export default class GB_FieldMappingTable extends LightningElement
                 await updateFieldMappings({ updatedMappings: newMapSettings });
 
                 const evt = new ShowToastEvent({
-                    title: '$this.objectMappingInfo.Name + : Field Mappings saved Successfully',
+                    title: `${this.objectMappingInfo.Name} - Field Mappings saved Successfully`,
                     variant: 'success',
                     mode: 'dismissable'
                 });

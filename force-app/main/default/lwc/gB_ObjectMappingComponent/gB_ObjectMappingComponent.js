@@ -47,8 +47,6 @@ export default class GB_ObjectMappingComponent extends LightningElement
         this.wiredObjectMapsResult = result;
         if (result.data)
         {
-            console.log('found ' + result.data.length + ' records');
-            console.log(result.data);
             this.mapData = result.data;
         }
         else if (result.error)

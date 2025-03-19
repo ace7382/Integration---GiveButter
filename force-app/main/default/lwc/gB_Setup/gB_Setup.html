@@ -34,7 +34,6 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <!-- TODO: Set "While Generating", change to x if fail, check if success -->
                         <td class="center-element">
                             <template lwc:if={externalCredential}>
                                 <lightning-icon icon-name="standard:task2"></lightning-icon>
@@ -44,7 +43,7 @@
                             </template>
                         </td>
                         <td>
-                            <lightning-formatted-text value="Named Credential"></lightning-formatted-text>
+                            <lightning-formatted-text value="External Credential"></lightning-formatted-text>
                         </td>
                         <td>
                             <template lwc:if={externalCredential}>
@@ -56,6 +55,29 @@
                             </template>
                         </td>
                     </tr>
+                    <tr>
+                        <td class="center-element">
+                            <template lwc:if={principalFound}>
+                                <lightning-icon icon-name="standard:task2"></lightning-icon>
+                            </template>
+                            <template lwc:else>
+                                <lightning-icon icon-name="standard:first_non_empty"></lightning-icon>
+                            </template>
+                        </td>
+                        <td>
+                            <lightning-formatted-text value="External Credential - API Key Principal"></lightning-formatted-text>
+                        </td>
+                        <td>
+                            <template lwc:if={principalFound}>
+                                <lightning-formatted-url 
+                                    value={externalCredentialURL}
+                                    label="Found in the Principals Section of the External Credential"
+                                    target="_blank">
+                                </lightning-formatted-url>
+                            </template>
+                        </td>
+                    </tr>
+
                 </tbody>
             </table>
         </div>

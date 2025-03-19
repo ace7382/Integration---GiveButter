@@ -1,8 +1,8 @@
 public with sharing class CredentialCreator 
 {
-    static final String EX_CRED_NAME   = 'GiveButter_Credential';
-    // String externalCredentialLabel  = 'GiveButter API Key Credential';
-    // String principalName            = 'API Key';
+    static final String EX_CRED_NAME    = 'GiveButter_Credential';
+    //String externalCredentialLabel  = 'GiveButter API Key Credential';
+    static final String PRINCIPAL_NAME  = 'API Key';
     // String credentialName           = 'key';
     // String headerName               = 'Authorization';
     // String apiKey                   = '5705|qmPL3XB2SWZNcWakEPXtJxE1PjWPBqef10RS5KHa';
@@ -13,5 +13,33 @@ public with sharing class CredentialCreator
         ConnectApi.ExternalCredential cred = ConnectApi.NamedCredentials.getExternalCredential(EX_CRED_NAME);
         
         return cred;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static Boolean getPrincipal()
+    {
+        ConnectApi.ExternalCredential cred = getExternalCredential();
+
+        if (cred == null)
+        {
+            return false;
+        }
+        else
+        {
+            if (cred.principals == null || cred.principals.isEmpty())
+            {
+                return false;
+            }
+
+            for (ConnectApi.ExternalCredentialPrincipal principal : cred.principals)
+            {
+                if (principal.principalName == PRINCIPAL_NAME)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

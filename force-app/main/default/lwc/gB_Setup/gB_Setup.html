@@ -8,7 +8,8 @@
                 <lightning-input
                     type="text" 
                     label="GiveButter API Key"
-                    name="apiKeyText">
+                    name="apiKeyText"
+                    onchange={handleAPIInputCange}>
                 </lightning-input>
                 <lightning-button 
                     name="GenerateButton"
@@ -77,7 +78,28 @@
                             </template>
                         </td>
                     </tr>
-
+                    <tr>
+                        <td class="center-element">
+                            <template lwc:if={apiCredentialFound}>
+                                <lightning-icon icon-name="standard:task2"></lightning-icon>
+                            </template>
+                            <template lwc:else>
+                                <lightning-icon icon-name="standard:first_non_empty"></lightning-icon>
+                            </template>
+                        </td>
+                        <td>
+                            <lightning-formatted-text value="API Key Parameter"></lightning-formatted-text>
+                        </td>
+                        <td>
+                            <template lwc:if={apiCredentialFound}>
+                                <lightning-formatted-url 
+                                    value={externalCredentialURL}
+                                    label="Principals Section > API Key Parameter > Edit > Paramater 1 (Name: key)"
+                                    target="_blank">
+                                </lightning-formatted-url>
+                            </template>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

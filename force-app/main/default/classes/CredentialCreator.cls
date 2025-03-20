@@ -5,7 +5,7 @@ public with sharing class CredentialCreator
     static final String PRINCIPAL_NAME  = 'API Key';
     // String credentialName           = 'key';
     // String headerName               = 'Authorization';
-    // String apiKey                   = '5705|qmPL3XB2SWZNcWakEPXtJxE1PjWPBqef10RS5KHa';
+    //String apiKey                   = '5705|qmPL3XB2SWZNcWakEPXtJxE1PjWPBqef10RS5KHa';
 
     @AuraEnabled(cacheable=true)
     public static ConnectApi.ExternalCredential getExternalCredential()
@@ -41,5 +41,29 @@ public with sharing class CredentialCreator
 
             return false;
         }
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static Boolean getAPICredential(String apiKey)
+    {
+        ConnectApi.Credential cred = ConnectApi.NamedCredentials.getCredential(
+                                        EX_CRED_NAME
+                                        , PRINCIPAL_NAME
+                                        , ConnectApi.CredentialPrincipalType.NamedPrincipal);
+
+        if (cred == null)
+        {
+            return false;
+        }
+
+        for (ConnectApi.CredentialValue credValue : cred.credentials.values())
+        {
+            if (credValue.value == apiKey)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

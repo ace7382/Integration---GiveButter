@@ -9,7 +9,7 @@
                     type="text" 
                     label="GiveButter API Key"
                     name="apiKeyText"
-                    onchange={handleAPIInputCange}>
+                    onchange={handleAPIInputChange}>
                 </lightning-input>
                 <lightning-button 
                     name="GenerateButton"
@@ -97,6 +97,29 @@
                                     label="Principals Section > API Key Parameter > Edit > Paramater 1 (Name: key)"
                                     target="_blank">
                                 </lightning-formatted-url>
+                            </template>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="center-element">
+                            <template lwc:if={permissionSet}>
+                                <lightning-icon icon-name="standard:task2"></lightning-icon>
+                            </template>
+                            <template lwc:else>
+                                <lightning-icon icon-name="standard:first_non_empty"></lightning-icon>
+                            </template>
+                        </td>
+                        <td>
+                            <lightning-formatted-text value="API Key Permission Set"></lightning-formatted-text>
+                        </td>
+                        <td>
+                            <template lwc:if={permissionSet}>
+                                <lightning-button
+                                    name="navToPermissionSetButton"
+                                    onclick={navigateToPermissionSet}
+                                    label={permissionSet.Name}
+                                    variant="brand">
+                                </lightning-button>
                             </template>
                         </td>
                     </tr>

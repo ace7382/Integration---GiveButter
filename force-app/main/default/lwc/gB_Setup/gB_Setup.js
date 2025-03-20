@@ -6,6 +6,7 @@ import { NavigationMixin } from 'lightning/navigation';
 import getExternalCredential from '@salesforce/apex/CredentialCreator.getExternalCredential';
 import getPrincipal from '@salesforce/apex/CredentialCreator.getPrincipal';
 import getAPICredential from '@salesforce/apex/CredentialCreator.getAPICredential';
+import getPermissionSet from '@salesforce/apex/CredentialCreator.getPermissionSet';
 
 import getBaseURL from '@salesforce/apex/Utils.getBaseURL';
 
@@ -16,6 +17,8 @@ export default class GB_Setup extends NavigationMixin(LightningElement)
     apiInputValue;
 
     externalCredential;
+    permissionSet;
+
     principalFound;
     apiCredentialFound;
 
@@ -73,6 +76,23 @@ export default class GB_Setup extends NavigationMixin(LightningElement)
         console.log(this.apiCredentialFound);
     }
 
+    @wire(getPermissionSet)
+    permSet({error, data})
+    {
+        if (data)
+        {
+            console.log('perm set');
+            console.log(data);
+
+            this.permissionSet = data;
+        }
+        else if (error)
+        {
+            this.error = error;
+            this.permissionSet = undefined;
+        }
+    }
+
     @api
     get externalCredentialURL()
     {
@@ -82,20 +102,24 @@ export default class GB_Setup extends NavigationMixin(LightningElement)
         return '';
     }
 
-    handleAPIInputCange(event)
+    handleAPIInputChange(event)
     {
         this.apiInputValue = event.detail.value;
     }
 
-    navigateToExternalCredential()
+    navigateToPermissionSet()
     {
-        this[NavigationMixin.Navigate]({
+        this[NavigationMixin.GenerateUrl]({
             type: 'standard__recordPage',
             attributes: {
-                recordId: this.externalCredential.Id,
-                objectApiName: 'ExternalCredential',
+                recordId: this.permissionSet.Id,
+                objectApiName: 'PermissionSet',
                 actionName: 'view'
             }
-        });
+        }).then(url => 
+            {
+                window.open(url, "_blank");
+            }
+        );
     }
 }

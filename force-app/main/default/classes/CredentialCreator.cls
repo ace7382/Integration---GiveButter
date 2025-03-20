@@ -1,8 +1,10 @@
 public with sharing class CredentialCreator 
 {
-    static final String EX_CRED_NAME    = 'GiveButter_Credential';
+    static final String EX_CRED_NAME            = 'GiveButter_Credential';
     //String externalCredentialLabel  = 'GiveButter API Key Credential';
-    static final String PRINCIPAL_NAME  = 'API Key';
+    static final String PRINCIPAL_NAME          = 'API Key';
+    static final String PERMISSION_SET_NAME     = 'GiveButter_API_Access';
+    static final String PERMISSION_SET_LABEL    = 'GiveButter - API Key Named Credential Access';
     // String credentialName           = 'key';
     // String headerName               = 'Authorization';
     //String apiKey                   = '5705|qmPL3XB2SWZNcWakEPXtJxE1PjWPBqef10RS5KHa';
@@ -65,5 +67,27 @@ public with sharing class CredentialCreator
         }
 
         return false;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static PermissionSet getPermissionSet()
+    {
+        List<PermissionSet> permSets =  [   SELECT 
+                                                Id
+                                                , Name 
+                                            FROM PermissionSet 
+                                            WHERE Name =: PERMISSION_SET_NAME
+                                            WITH SECURITY_ENFORCED
+                                            LIMIT 1
+                                        ];
+
+        if (permSets.size() > 0)
+        {
+            return permSets[0];
+        }
+        else 
+        {
+            return null;
+        }
     }
 }
